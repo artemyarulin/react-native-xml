@@ -1,6 +1,6 @@
 #import <XCTest/XCTest.h>
 #import "GDataXMLNode.h"
-#import "rnxml.h"
+#import "RNMXml.h"
 
 @interface rnxmlTests : XCTestCase
 
@@ -39,7 +39,7 @@
                                  @"asdasd":  @[] };
     
     NSArray* queries = testRuns.allKeys;
-    NSArray* results =  [rnxml findByXPathInString:xml queries:queries];
+    NSArray* results =  [RNMXml findByXPathInString:xml queries:queries];
     XCTAssertEqual(results.count, testRuns.count);
     
     [queries enumerateObjectsUsingBlock:^(NSString* query, NSUInteger idx, BOOL *stop) {

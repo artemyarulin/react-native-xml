@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
+#import "RCTBridgeModule.h"
 
-@interface rnxml : NSObject
+@interface RNMXml : NSObject <RCTBridgeModule>
 
 +(NSArray*)findByXPathInString:(NSString*)string queries:(NSArray*)queries;
 

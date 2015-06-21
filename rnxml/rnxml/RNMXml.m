@@ -1,7 +1,16 @@
-#import "rnxml.h"
+#import "RNMXml.h"
 #import "GDataXMLNode.h"
+#import "RCTBridge.h"
+#import "RCTEventDispatcher.h"
 
-@implementation rnxml
+@implementation RNMXml
+
+RCT_EXPORT_MODULE()
+
+RCT_EXPORT_METHOD(findEvents:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
+{
+    callback([RNMXml findByXPathInString:string queries:queries]);
+}
 
 +(NSArray*)findByXPathInString:(NSString*)string queries:(NSArray*)queries
 {
@@ -16,7 +25,7 @@
         }];
         [output addObject:nodesValue];
     }];
-    
+
     return output;
 }
 

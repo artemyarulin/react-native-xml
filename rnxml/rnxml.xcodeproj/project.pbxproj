@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D459A51E3333019F2DBFAD0 /* libPods-rnxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911BD0ECC16B0E754D017B9 /* libPods-rnxml.a */; };
-		9685616A1B36833D0092B6F3 /* rnxml.m in Sources */ = {isa = PBXBuildFile; fileRef = 968561691B36833D0092B6F3 /* rnxml.m */; };
+		9685616A1B36833D0092B6F3 /* RNMXml.m in Sources */ = {isa = PBXBuildFile; fileRef = 968561691B36833D0092B6F3 /* RNMXml.m */; };
 		969B71081B367CBA00501BAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B71071B367CBA00501BAF /* main.m */; };
 		969B710B1B367CBA00501BAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B710A1B367CBA00501BAF /* AppDelegate.m */; };
 		969B710E1B367CBA00501BAF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B710D1B367CBA00501BAF /* ViewController.m */; };
@@ -35,8 +35,8 @@
 		6911BD0ECC16B0E754D017B9 /* libPods-rnxml.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnxml.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A7637D330AF85FAA1821334 /* Pods-rnxml.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rnxml.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rnxml/Pods-rnxml.debug.xcconfig"; sourceTree = "<group>"; };
 		91A45820172D6E8C2C12536C /* libPods-rnxmlTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rnxmlTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		968561681B36833D0092B6F3 /* rnxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rnxml.h; sourceTree = "<group>"; };
-		968561691B36833D0092B6F3 /* rnxml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rnxml.m; sourceTree = "<group>"; };
+		968561681B36833D0092B6F3 /* RNMXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMXml.h; sourceTree = "<group>"; };
+		968561691B36833D0092B6F3 /* RNMXml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNMXml.m; sourceTree = "<group>"; };
 		969B71021B367CBA00501BAF /* rnxml.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rnxml.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		969B71061B367CBA00501BAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		969B71071B367CBA00501BAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -117,8 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				969B71051B367CBA00501BAF /* Supporting Files */,
-				968561681B36833D0092B6F3 /* rnxml.h */,
-				968561691B36833D0092B6F3 /* rnxml.m */,
+				968561681B36833D0092B6F3 /* RNMXml.h */,
+				968561691B36833D0092B6F3 /* RNMXml.m */,
 			);
 			path = rnxml;
 			sourceTree = "<group>";
@@ -326,7 +326,7 @@
 				969B710E1B367CBA00501BAF /* ViewController.m in Sources */,
 				969B710B1B367CBA00501BAF /* AppDelegate.m in Sources */,
 				969B71081B367CBA00501BAF /* main.m in Sources */,
-				9685616A1B36833D0092B6F3 /* rnxml.m in Sources */,
+				9685616A1B36833D0092B6F3 /* RNMXml.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
