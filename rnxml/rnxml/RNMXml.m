@@ -7,9 +7,9 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(findEvents:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(find:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
 {
-    callback([RNMXml findByXPathInString:string queries:queries]);
+    callback(@[[RNMXml findByXPathInString:string queries:queries]]);
 }
 
 +(NSArray*)findByXPathInString:(NSString*)string queries:(NSArray*)queries
