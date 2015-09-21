@@ -7,15 +7,34 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(find:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(queryXml:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
 {
-    callback(@[[RNMXml findByXPathInString:string queries:queries]]);
+    callback(@[[RNMXml findByXPathInXml:string queries:queries]]);
 }
 
-+(NSArray*)findByXPathInString:(NSString*)string queries:(NSArray*)queries
+RCT_EXPORT_METHOD(queryHtml:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
 {
-    NSError* err; // TODO: Think about error handling and reporting
+    callback(@[[RNMXml findByXPathInHtml:string queries:queries]]);
+}
+
++(NSArray*)findByXPathInXml:(NSString*)string queries:(NSArray*)queries;
+{
+    NSError* err;
     GDataXMLDocument* doc = [[GDataXMLDocument alloc] initWithXMLString:string encoding:NSUTF8StringEncoding error:&err];
+    if (err) NSLog(@"findByXPathInXml error: %@", err);
+    return [self queryDocument:doc queries:queries];
+}
+
++(NSArray*)findByXPathInHtml:(NSString*)string queries:(NSArray*)queries
+{
+    NSError* err;
+    GDataXMLDocument* doc = [[GDataXMLDocument alloc] initWithHTMLString:string encoding:NSUTF8StringEncoding error:&err];
+    if (err) NSLog(@"findByXPathInHtml error: %@", err);
+    return [self queryDocument:doc queries:queries];
+}
+
++(NSArray*)queryDocument:(GDataXMLDocument*)doc queries:(NSArray*)queries
+{
     NSMutableArray* output = [NSMutableArray arrayWithCapacity:queries.count];
     [queries enumerateObjectsUsingBlock:^(NSString* query, NSUInteger idx, BOOL *stop) {
         NSArray* nodes = [doc nodesForXPath:query error:nil];
@@ -25,7 +44,7 @@ RCT_EXPORT_METHOD(find:(NSString*)string queries:(NSArray*)queries callback:(RCT
         }];
         [output addObject:nodesValue];
     }];
-
+    
     return output;
 }
 

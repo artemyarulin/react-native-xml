@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name           = "react-native-xml"
-  s.version        = "0.0.3"
+  s.version        = "0.1.0"
   s.summary        = "react native xml module with xpath support"
   s.description    = "Provides you a function to parse and search inside XML using XPath and JavaScript"
   s.homepage       = "https://github.com/artemyarulin/react-native-xml"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.public_header_files = "rnxml/rnxml/RNMXml.h"
   s.requires_arc  = true
   s.dependency "GDataXML-HTML", "~> 1.1"
-  s.dependency "React", "> 0.5.0"
+  s.dependency "React", "> 0.8.0"
   # CocoaPods wouldn't handle it for us, so let's expose build flags from GDataXml-HTML
   s.library = 'xml2'
   s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }

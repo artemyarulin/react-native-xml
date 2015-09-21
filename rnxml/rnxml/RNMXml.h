@@ -3,6 +3,7 @@
 
 @interface RNMXml : NSObject <RCTBridgeModule>
 
-+(NSArray*)findByXPathInString:(NSString*)string queries:(NSArray*)queries;
++(NSArray*)findByXPathInXml:(NSString*)string queries:(NSArray*)queries;
++(NSArray*)findByXPathInHtml:(NSString*)string queries:(NSArray*)queries;
 
 @end
