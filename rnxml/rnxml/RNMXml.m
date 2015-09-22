@@ -7,13 +7,6 @@
 
 RCT_EXPORT_MODULE()
 
-// Deprecated
-RCT_EXPORT_METHOD(find:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
-{
-    callback(@[[RNMXml findByXPathInXml:string queries:queries]]);
-}
-
-
 RCT_EXPORT_METHOD(queryXml:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
 {
     callback(@[[RNMXml findByXPathInXml:string queries:queries]]);

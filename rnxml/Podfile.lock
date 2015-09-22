@@ -1,12 +1,12 @@
 PODS:
   - GDataXML-HTML (1.2.0)
-  - React (0.5.0):
-    - React/Core (= 0.5.0)
-  - React/Core (0.5.0)
+  - React (0.9.0):
+    - React/Core (= 0.9.0)
+  - React/Core (0.9.0)
 
 DEPENDENCIES:
   - GDataXML-HTML (from `https://github.com/graetzer/GDataXML-HTML`, branch `xpath-fix`)
-  - React (~> 0.5.0)
+  - React (~> 0.9.0)
 
 EXTERNAL SOURCES:
   GDataXML-HTML:
@@ -19,7 +19,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/graetzer/GDataXML-HTML
 
 SPEC CHECKSUMS:
-  GDataXML-HTML: d350f07c22600f19aba347a331c24fe02cbdf619
-  React: c9789af172f84013c14ac8ffdc41fb6ce1ba5307
+  GDataXML-HTML: dac3692417e9fc612f8e12d8baae3706fccedcc8
+  React: 3185f1ac0c06c80714ddab5b4e4c51d2519dee88
 
 COCOAPODS: 0.38.2
