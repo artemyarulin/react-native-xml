@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.dependency "React", "> 0.8.0"
   # CocoaPods wouldn't handle it for us, so let's expose build flags from GDataXml-HTML
   s.library = 'xml2'
-  s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2' }
+  s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2', "CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES" => "YES" }
 end
