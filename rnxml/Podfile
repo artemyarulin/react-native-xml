@@ -1,7 +1,7 @@
 target 'rnxml' do
 
 pod 'GDataXML-HTML', :git => 'https://github.com/graetzer/GDataXML-HTML', :branch => 'xpath-fix'
-pod 'React', '~> 0.9.0'
+pod 'React', '~> 0.5.0'
 
 end
 
