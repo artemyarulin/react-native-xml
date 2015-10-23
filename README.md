@@ -27,10 +27,23 @@ xml.queryHtml('<html><div>a</div><div>b</div></html>',
 		 	 ['/html/body/div'],
 		 	 results => console.log(results[0]))
 //Output: ['a','b']
+
 ```
+
+`parseString(string,isHtml) -> parsedTree`
+
+Where parsedTree is a dictionary (inspired by [Clojure data.xml](https://github.com/clojure/data.xml)) with a structure:
+
+```
+{"tag":{node_name}
+ "attrs:{"attrName":"attrValue"},
+ "content":[either text content or the same structure for each childs]}
+```
+
+See [tests](rnxml/rnxmlTests/rnxmlTests.m) for more information
 
 # Installation
 
 Using [Cocoapods](http://cocoapods.org):
 
-`pod 'react-native-xml', '~> 0.1.0' `
+`pod 'react-native-xml', '0.2.0' `
