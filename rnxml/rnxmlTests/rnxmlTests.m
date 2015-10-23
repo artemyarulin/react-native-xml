@@ -39,7 +39,9 @@
                                  @"asdasd":  @[] };
     
     NSArray* queries = testRuns.allKeys;
-    NSArray* results =  [RNMXml findByXPathInXml:xml queries:queries];
+    NSError* err;
+    NSArray* results =  [RNMXml findByXPathInXml:xml queries:queries error:&err];
+    XCTAssertNil(err);
     XCTAssertEqual(results.count, testRuns.count);
     
     [queries enumerateObjectsUsingBlock:^(NSString* query, NSUInteger idx, BOOL *stop) {
@@ -62,7 +64,9 @@
                                  @"asdasd":                         @[] };
     
     NSArray* queries = testRuns.allKeys;
-    NSArray* results =  [RNMXml findByXPathInHtml:html queries:queries];
+    NSError* err;
+    NSArray* results =  [RNMXml findByXPathInHtml:html queries:queries error:&err];
+    XCTAssertNil(err);
     XCTAssertEqual(results.count, testRuns.count);
     
     [queries enumerateObjectsUsingBlock:^(NSString* query, NSUInteger idx, BOOL *stop) {
@@ -71,6 +75,51 @@
         XCTAssertEqual(expResults.count, curResults.count,@"There should be right amount of results for xpath: %@", query);
         XCTAssert([curResults isEqualToArray:expResults],@"There should be right result values for xpath: %@",query);
     }];
+}
+
+-(void)testParseingStrings
+{
+    NSString* doc = @"<?xml version=\"1.0\" encoding=\"utf-8\" ?> \
+    <SyncFolderItems xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"> \
+      <ItemShape xmlns=\"http://schemas.microsoft.com/exchange/services/2006/messages\"> \
+        <BaseShape xmlns=\"http://schemas.microsoft.com/exchange/services/2006/types\"> \
+          Default \
+        </BaseShape> \
+      </ItemShape> \
+      <SyncFolderId xmlns=\"http://schemas.microsoft.com/exchange/services/2006/messages\"> \
+        <DistinguishedFolderId Id=\"drafts\" xmlns=\"http://schemas.microsoft.com/exchange/services/2006/types\" /> \
+      </SyncFolderId> \
+      <MaxChangesReturned xmlns=\"http://schemas.microsoft.com/exchange/services/2006/messages\"> \
+        20 \
+      </MaxChangesReturned> \
+    </SyncFolderItems>";
+
+    NSError* err;
+    NSDictionary* parsed = [RNMXml parseString:doc isHtml:NO error:&err];
+    XCTAssertNil(err);
+    
+    
+    NSDictionary* expected = @{@"tag":@"SyncFolderItems",
+                               @"attrs":@{@"xmlns/xsi": @"http://www.w3.org/2001/XMLSchema-instance",
+                                          @"xmlns/xsd": @"http://www.w3.org/2001/XMLSchema"},
+                               @"content":@[
+                                       @{@"tag":@"ItemShape",
+                                         @"attrs":@{@"xmlns":@"http://schemas.microsoft.com/exchange/services/2006/message"},
+                                         @"content":@[
+                                                 @{@"tag":@"BaseShape",
+                                                   @"attrs":@{@"xmlns": @"http://schemas.microsoft.com/exchange/services/2006/type" },
+                                                   @"content":@[@"Default"]}]},
+                                       @{@"tag":@"SyncFolderId",
+                                         @"attrs":@{@"xmlns":@"http://schemas.microsoft.com/exchange/services/2006/messages"},
+                                         @"content":@[
+                                                 @{@"tag":@"DistinguishedFolderId",
+                                                   @"attrs":@{@"Id":@"drafts",
+                                                              @"xmlns":@"http://schemas.microsoft.com/exchange/services/2006/types"},
+                                                   @"content":@[]}]},
+                                       @{@"tag":@"MaxChangesReturned",
+                                         @"attrs":@{@"xmlns":@"http://schemas.microsoft.com/exchange/services/2006/messages"},
+                                         @"content":@[@"20"]}]};
+    XCTAssertEqualObjects(parsed, expected,@"Parsed dictionary has to have a right structure");
 }
 
 @end

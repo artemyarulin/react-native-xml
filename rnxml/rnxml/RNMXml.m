@@ -5,31 +5,56 @@
 
 @implementation RNMXml
 
+static NSString* ERR_DOMAIN = @"RNMXml";
+
 RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(queryXml:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
 {
-    callback(@[[RNMXml findByXPathInXml:string queries:queries]]);
+    NSError* err;
+    NSArray* results = [RNMXml findByXPathInXml:string queries:queries error:&err];
+    callback(@[(err? err: [NSNull null]),results]);
 }
 
 RCT_EXPORT_METHOD(queryHtml:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
 {
-    callback(@[[RNMXml findByXPathInHtml:string queries:queries]]);
+    NSError* err;
+    NSArray* results = [RNMXml findByXPathInHtml:string queries:queries error:&err];
+    callback(@[(err? err: [NSNull null]),results]);
 }
 
-+(NSArray*)findByXPathInXml:(NSString*)string queries:(NSArray*)queries;
+RCT_EXPORT_METHOD(parseString:(NSString*)string isHtml:(BOOL)isHtml callback:(RCTResponseSenderBlock)callback)
+{
+    NSError* err;
+    NSDictionary* results = [RNMXml parseString:string isHtml:isHtml error:&err];
+    callback(@[(err? err: [NSNull null]),results]);}
+
++(NSArray*)findByXPathInXml:(NSString*)string queries:(NSArray*)queries error:(NSError**)error
 {
     NSError* err;
     GDataXMLDocument* doc = [[GDataXMLDocument alloc] initWithXMLString:string encoding:NSUTF8StringEncoding error:&err];
-    if (err) NSLog(@"findByXPathInXml error: %@", err);
-    return [self queryDocument:doc queries:queries];
+    if (err)
+    {
+        *error = [NSError errorWithDomain:ERR_DOMAIN
+                                     code:err.code
+                                 userInfo:@{NSLocalizedDescriptionKey:@"Error during parsing. Xml not in a proper mode"}];
+        return @[];
+    }
+    else
+        return [self queryDocument:doc queries:queries];
 }
 
-+(NSArray*)findByXPathInHtml:(NSString*)string queries:(NSArray*)queries
++(NSArray*)findByXPathInHtml:(NSString*)string queries:(NSArray*)queries error:(NSError**)error
 {
     NSError* err;
     GDataXMLDocument* doc = [[GDataXMLDocument alloc] initWithHTMLString:string encoding:NSUTF8StringEncoding error:&err];
-    if (err) NSLog(@"findByXPathInHtml error: %@", err);
+    if (err)
+    {
+        *error = [NSError errorWithDomain:ERR_DOMAIN
+                                     code:err.code
+                                 userInfo:@{NSLocalizedDescriptionKey:@"Error during parsing. HTML not in a proper mode"}];
+        return @[];
+    }
     return [self queryDocument:doc queries:queries];
 }
 
@@ -46,6 +71,11 @@ RCT_EXPORT_METHOD(queryHtml:(NSString*)string queries:(NSArray*)queries callback
     }];
     
     return output;
+}
+
++(NSDictionary*)parseString:(NSString*)string isHtml:(BOOL)isHtml error:(NSError**)error
+{
+    return nil;
 }
 
 @end
