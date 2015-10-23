@@ -104,10 +104,10 @@
                                           @"xmlns/xsd": @"http://www.w3.org/2001/XMLSchema"},
                                @"content":@[
                                        @{@"tag":@"ItemShape",
-                                         @"attrs":@{@"xmlns":@"http://schemas.microsoft.com/exchange/services/2006/message"},
+                                         @"attrs":@{@"xmlns":@"http://schemas.microsoft.com/exchange/services/2006/messages"},
                                          @"content":@[
                                                  @{@"tag":@"BaseShape",
-                                                   @"attrs":@{@"xmlns": @"http://schemas.microsoft.com/exchange/services/2006/type" },
+                                                   @"attrs":@{@"xmlns": @"http://schemas.microsoft.com/exchange/services/2006/types" },
                                                    @"content":@[@"Default"]}]},
                                        @{@"tag":@"SyncFolderId",
                                          @"attrs":@{@"xmlns":@"http://schemas.microsoft.com/exchange/services/2006/messages"},

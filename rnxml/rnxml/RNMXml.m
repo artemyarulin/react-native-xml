@@ -75,7 +75,53 @@ RCT_EXPORT_METHOD(parseString:(NSString*)string isHtml:(BOOL)isHtml callback:(RC
 
 +(NSDictionary*)parseString:(NSString*)string isHtml:(BOOL)isHtml error:(NSError**)error
 {
-    return nil;
+    NSError* err;
+    GDataXMLDocument* doc;
+    
+    if (isHtml)
+        doc = [[GDataXMLDocument alloc] initWithHTMLString:string encoding:NSUTF8StringEncoding error:&err];
+    else
+        doc = [[GDataXMLDocument alloc] initWithXMLString:string encoding:NSUTF8StringEncoding error:&err];
+    
+    if (err)
+    {
+        *error = [NSError errorWithDomain:ERR_DOMAIN
+                                     code:err.code
+                                 userInfo:@{NSLocalizedDescriptionKey:@"Error during parsing"}];
+        return @{};
+    }
+    
+    return [self readNode:doc.rootElement];
+}
+
++(NSDictionary*)readNode:(GDataXMLNode*)node
+{
+    NSMutableDictionary* attrs = [@{} mutableCopy];
+    
+    if ([node isKindOfClass:GDataXMLElement.class])
+    {
+        [((GDataXMLElement*)node).attributes enumerateObjectsUsingBlock:^(GDataXMLNode* attr, NSUInteger idx, BOOL* stop) {
+            attrs[attr.name] = attr.stringValue;
+        }];
+
+        [((GDataXMLElement*)node).namespaces enumerateObjectsUsingBlock:^(GDataXMLNode* ns, NSUInteger idx, BOOL* stop) {
+            NSString* fullName = [ns.name isEqualToString:@""] ? @"xmlns" : [NSString stringWithFormat:@"xmlns/%@", ns.name];
+            attrs[fullName] = ns.stringValue;
+        }];
+    }
+
+    NSMutableArray* childs = [@[] mutableCopy];
+    NSString* content;
+    if (node.children.count == 1 && ((GDataXMLNode*)node.children[0]).kind == GDataXMLTextKind)
+        content =[((GDataXMLNode*)node.children[0]).stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    else
+        [node.children enumerateObjectsUsingBlock:^(GDataXMLNode* child, NSUInteger idx, BOOL* stop) {
+            [childs addObject:[self readNode:child]];
+        }];
+    
+    return @{@"tag":node.name,
+             @"attrs":attrs,
+             @"content":childs.count ? childs : (content ? @[content]: @[])};
 }
 
 @end
