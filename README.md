@@ -35,7 +35,7 @@ xml.queryHtml('<html><div>a</div><div>b</div></html>',
 Where parsedTree is a dictionary (inspired by [Clojure data.xml](https://github.com/clojure/data.xml)) with a structure:
 
 ```
-{"tag":{node_name}
+{"tag":"tagName",
  "attrs:{"attrName":"attrValue"},
  "content":[either text content or the same structure for each childs]}
 ```
