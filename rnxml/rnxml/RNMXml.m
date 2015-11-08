@@ -122,7 +122,7 @@ RCT_EXPORT_METHOD(parseString:(NSString*)string isHtml:(BOOL)isHtml callback:(RC
 
     return @{@"tag":node.name,
              @"attrs":attrs,
-             @"content":childs.count ? childs : (content ? @[content]: @[])};
+             @"content":childs.count ? childs : (content.length ? @[content]: @[])};
 }
 
 @end
