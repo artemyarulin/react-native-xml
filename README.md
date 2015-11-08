@@ -46,4 +46,4 @@ See [tests](rnxml/rnxmlTests/rnxmlTests.m) for more information
 
 Using [Cocoapods](http://cocoapods.org):
 
-`pod 'react-native-xml', '0.2.0' `
+`pod 'react-native-xml', '0.2.1' `

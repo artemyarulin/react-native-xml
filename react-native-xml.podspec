@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name           = "react-native-xml"
-  s.version        = "0.2.0"
+  s.version        = "0.2.1"
   s.summary        = "react native xml module with xpath support"
   s.description    = "Provides you a function to parse and search inside XML using XPath and JavaScript"
   s.homepage       = "https://github.com/artemyarulin/react-native-xml"

@@ -2,6 +2,7 @@
 #import "GDataXMLNode.h"
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
+#import "RCTUtils.h"
 
 @implementation RNMXml
 
@@ -13,21 +14,21 @@ RCT_EXPORT_METHOD(queryXml:(NSString*)string queries:(NSArray*)queries callback:
 {
     NSError* err;
     NSArray* results = [RNMXml findByXPathInXml:string queries:queries error:&err];
-    callback(@[(err? err: [NSNull null]),results]);
+    callback(@[(err? RCTJSErrorFromNSError(err): [NSNull null]),results]);
 }
 
 RCT_EXPORT_METHOD(queryHtml:(NSString*)string queries:(NSArray*)queries callback:(RCTResponseSenderBlock)callback)
 {
     NSError* err;
     NSArray* results = [RNMXml findByXPathInHtml:string queries:queries error:&err];
-    callback(@[(err? err: [NSNull null]),results]);
+    callback(@[(err? RCTJSErrorFromNSError(err): [NSNull null]),results]);
 }
 
 RCT_EXPORT_METHOD(parseString:(NSString*)string isHtml:(BOOL)isHtml callback:(RCTResponseSenderBlock)callback)
 {
     NSError* err;
     NSDictionary* results = [RNMXml parseString:string isHtml:isHtml error:&err];
-    callback(@[(err? err: [NSNull null]),results]);}
+    callback(@[(err? RCTJSErrorFromNSError(err): [NSNull null]),results]);}
 
 +(NSArray*)findByXPathInXml:(NSString*)string queries:(NSArray*)queries error:(NSError**)error
 {
@@ -69,7 +70,7 @@ RCT_EXPORT_METHOD(parseString:(NSString*)string isHtml:(BOOL)isHtml callback:(RC
         }];
         [output addObject:nodesValue];
     }];
-    
+
     return output;
 }
 
@@ -77,12 +78,12 @@ RCT_EXPORT_METHOD(parseString:(NSString*)string isHtml:(BOOL)isHtml callback:(RC
 {
     NSError* err;
     GDataXMLDocument* doc;
-    
+
     if (isHtml)
         doc = [[GDataXMLDocument alloc] initWithHTMLString:string encoding:NSUTF8StringEncoding error:&err];
     else
         doc = [[GDataXMLDocument alloc] initWithXMLString:string encoding:NSUTF8StringEncoding error:&err];
-    
+
     if (err)
     {
         *error = [NSError errorWithDomain:ERR_DOMAIN
@@ -90,14 +91,14 @@ RCT_EXPORT_METHOD(parseString:(NSString*)string isHtml:(BOOL)isHtml callback:(RC
                                  userInfo:@{NSLocalizedDescriptionKey:@"Error during parsing"}];
         return @{};
     }
-    
+
     return [self readNode:doc.rootElement];
 }
 
 +(NSDictionary*)readNode:(GDataXMLNode*)node
 {
     NSMutableDictionary* attrs = [@{} mutableCopy];
-    
+
     if ([node isKindOfClass:GDataXMLElement.class])
     {
         [((GDataXMLElement*)node).attributes enumerateObjectsUsingBlock:^(GDataXMLNode* attr, NSUInteger idx, BOOL* stop) {
@@ -118,7 +119,7 @@ RCT_EXPORT_METHOD(parseString:(NSString*)string isHtml:(BOOL)isHtml callback:(RC
         [node.children enumerateObjectsUsingBlock:^(GDataXMLNode* child, NSUInteger idx, BOOL* stop) {
             [childs addObject:[self readNode:child]];
         }];
-    
+
     return @{@"tag":node.name,
              @"attrs":attrs,
              @"content":childs.count ? childs : (content ? @[content]: @[])};
